@@ -2,28 +2,37 @@ package pricing
 
 //XForY implements price calculator for group pricing
 type XForY struct {
-	StockPrice PriceCalculator
-	GroupQty   int
-	GroupPrice float64
+	stockPrice PriceCalculator
+	groupQty   int
+	groupPrice float64
+}
+
+//NewXForY returns xfory price calculator
+func NewXForY(stockPrice PriceCalculator, groupQty int, groupPrice float64) XForY {
+	return XForY{
+		stockPrice: stockPrice,
+		groupQty:   groupQty,
+		groupPrice: groupPrice,
+	}
 }
 
 //CalculatePrice calculates the price for given qty
 func (x XForY) CalculatePrice(itemQty int) PriceResult {
-	initialResult := x.StockPrice.CalculatePrice(itemQty)
+	initialResult := x.stockPrice.CalculatePrice(itemQty)
 
-	groupNumbers := itemQty / x.GroupQty
+	groupNumbers := itemQty / x.groupQty
 	if groupNumbers < 1 {
 		return initialResult
 	}
 
 	//now work out single qty
-	remaining := itemQty % x.GroupQty
+	remaining := itemQty % x.groupQty
 	LineItems := []LineItem{
-		LineItem{ItemQty: groupNumbers * x.GroupQty, Total: float64(groupNumbers) * x.GroupPrice},
+		LineItem{ItemQty: groupNumbers * x.groupQty, Total: float64(groupNumbers) * x.groupPrice},
 	}
 
 	if remaining > 0 {
-		stockPrice := x.StockPrice.CalculatePrice(remaining)
+		stockPrice := x.stockPrice.CalculatePrice(remaining)
 		LineItems = append(LineItems, stockPrice.TotalPrices[0])
 	}
 

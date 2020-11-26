@@ -9,8 +9,8 @@ import (
 
 //TestXForY_CalculatePrice tests XForY.CalculatePrice
 func TestXForY_CalculatePrice(t *testing.T) {
-	s := pricing.Stock{UnitPrice: 50}
-	x := pricing.XForY{StockPrice: s, GroupQty: 3, GroupPrice: 130}
+	s := pricing.NewStock(50)
+	x := pricing.NewXForY(s, 3, 130)
 
 	result := x.CalculatePrice(7)
 	assert.Exactly(t, 260.0, result.TotalPrices[0].Total)
