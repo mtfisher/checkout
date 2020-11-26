@@ -7,6 +7,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
+//TestStock_CalculatePrice tests Stock.CalculatePrice
 func TestStock_CalculatePrice(t *testing.T) {
 	s := pricing.Stock{UnitPrice: 20}
 	result := s.CalculatePrice(2)
