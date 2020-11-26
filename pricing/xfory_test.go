@@ -28,5 +28,4 @@ func TestXForY_CalculatePrice(t *testing.T) {
 	assert.Exactly(t, 100.0, thirdResult.TotalPrices[0].Total)
 	assert.Exactly(t, 2, thirdResult.TotalPrices[0].ItemQty)
 	assert.Exactly(t, 1, len(thirdResult.TotalPrices))
-
 }
