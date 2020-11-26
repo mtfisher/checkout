@@ -8,7 +8,6 @@ type LineItem struct {
 
 //PriceResult stores data on what the pricing caulculators
 type PriceResult struct {
-	Name        string
 	UnitPrice   float64
 	TotalPrices []LineItem
 }

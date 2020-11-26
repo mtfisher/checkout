@@ -6,5 +6,10 @@ type Stock struct {
 }
 
 func (s Stock) CalculatePrice(itemQty int) PriceResult {
-
+	return PriceResult{
+		UnitPrice: s.UnitPrice,
+		TotalPrices: []LineItem{
+			LineItem{ItemQty: itemQty, Total: float64(itemQty) * s.UnitPrice},
+		},
+	}
 }
