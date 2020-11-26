@@ -9,21 +9,21 @@ import (
 )
 
 type mockPricing struct {
-	Price float64
+	price float64
 }
 
 //CalculatePrice returns mock price
 func (m mockPricing) CalculatePrice(itemQty int) pricing.PriceResult {
 	return pricing.PriceResult{
 		TotalPrices: []pricing.LineItem{
-			pricing.LineItem{ItemQty: itemQty, Total: m.mockPricing},
+			pricing.LineItem{ItemQty: itemQty, Total: m.price},
 		},
 	}
 }
 
 //TestCatalogueCheckout_NewCatalogueCheckout tests create method
 func TestCatalogueCheckout_NewCatalogueCheckout(t *testing.T) {
-	item1 := mockPricing{Price: 10}
+	item1 := mockPricing{price: 10}
 
 	checkout := checkout.NewCatalogueCheckout(map[string]pricing.PriceCalculator{"A": item1})
 	assert.NotEmpty(t, checkout)
@@ -31,13 +31,14 @@ func TestCatalogueCheckout_NewCatalogueCheckout(t *testing.T) {
 
 //TestCatalogueCheckout_GetTotal tests CatalogueCheckout.GetTotal
 func TestCatalogueCheckout_GetTotal(t *testing.T) {
-	item1 := mockPricing{Price: 10}
-	item2 := mockPricing{Price: 20}
+	item1 := mockPricing{price: 10}
+	item2 := mockPricing{price: 20}
 
 	checkout := checkout.NewCatalogueCheckout(map[string]pricing.PriceCalculator{"A": item1, "B": item2})
 
 	checkout.Scan("a")
 	checkout.Scan("B")
+	checkout.Scan("c")
 
-	assert.Exactly(t, 30.0, checkout.GetTotal)
+	assert.Exactly(t, 30.0, checkout.GetTotal())
 }
