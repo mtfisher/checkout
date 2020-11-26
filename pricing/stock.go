@@ -5,6 +5,7 @@ type Stock struct {
 	UnitPrice float64
 }
 
+//CalculatePrice calculates the price for given qty
 func (s Stock) CalculatePrice(itemQty int) PriceResult {
 	return PriceResult{
 		UnitPrice: s.UnitPrice,

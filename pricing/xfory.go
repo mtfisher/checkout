@@ -11,12 +11,10 @@ type XForY struct {
 func (x XForY) CalculatePrice(itemQty int) PriceResult {
 	initialResult := x.StockPrice.CalculatePrice(itemQty)
 
-	if itemQty == 0 {
-		//return stock if someone tries to feed in 0
+	groupNumbers := itemQty / x.GroupQty
+	if groupNumbers < 1 {
 		return initialResult
 	}
-
-	groupNumbers := itemQty / x.GroupQty
 
 	//now work out single qty
 	remaining := itemQty % x.GroupQty
